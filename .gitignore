@@ -8,4 +8,4 @@ __pycache__/
 .env
 
 # Testing notebook
-hello.ipynb
+CrewAI_agents/hello.ipynb
