@@ -1,21 +1,21 @@
-from crewai import Agent, Task, LLM
-import yaml
-from crewai_tools import SerperDevTool
+from crewai import Agent, Task, LLM  # Import necessary classes from the crewai library
+import yaml  # Import the yaml library for reading YAML configuration files
+from crewai_tools import SerperDevTool  # Import a custom tool for web search
 
+# Instantiate the SerperDevTool
 serper_dev_tool = SerperDevTool()
 
 # Load YAML Configuration
 with open("direct_approach\config.yaml", "r") as file:
     config = yaml.safe_load(file)
 
-
-# DEFINE LLM 
+# Define the Large Language Model (LLM)
 llm = LLM(
-        model="gemini/gemini-2.0-flash-lite",
-        temperature=0.7,
-        )
+    model="gemini/gemini-2.0-flash-lite",
+    temperature=0.7,
+)
 
-# DEFILE AGENTS AND CORRESPONDING TASKS
+# Define Agents and Corresponding Tasks
 
 ######### research_agent #########
 
@@ -25,14 +25,14 @@ research_agent = Agent(
     backstory=config["agents"]["research_agent"]["backstory"],
     tools=[serper_dev_tool],
     llm=llm,
-    verbose=True
+    verbose=True,
 )
 
 research_task = Task(
     description=config["tasks"]["research_task"]["description"],
     agent=research_agent,
     tools=[serper_dev_tool],
-    expected_output=config["tasks"]["research_task"]["expected_output"]
+    expected_output=config["tasks"]["research_task"]["expected_output"],
 )
 
 ######### summarization_agent #########
@@ -42,7 +42,7 @@ summarization_agent = Agent(
     goal=config["agents"]["summarization_agent"]["goal"],
     backstory=config["agents"]["summarization_agent"]["backstory"],
     llm=llm,
-    verbose=True
+    verbose=True,
 )
 
 summarization_task = Task(
@@ -53,16 +53,14 @@ summarization_task = Task(
 
 ######### fact_checker_agent #########
 
-
 fact_checker_agent = Agent(
     role=config["agents"]["fact_checker_agent"]["role"],
     goal=config["agents"]["fact_checker_agent"]["goal"],
     backstory=config["agents"]["fact_checker_agent"]["backstory"],
     tools=[serper_dev_tool],
     llm=llm,
-    verbose=True
+    verbose=True,
 )
-
 
 fact_checking_task = Task(
     description=config["tasks"]["fact_checking_task"]["description"],
