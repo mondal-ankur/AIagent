@@ -1,0 +1,11 @@
+# Virtual environment folder
+crewai/
+
+# Ignores all cache files
+__pycache__/
+
+# Environment variable like api keys
+.env
+
+# Testing notebook
+hello.ipynb
